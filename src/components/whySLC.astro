@@ -2,6 +2,7 @@
 import teacher from "../assets/teacher.svg";
 import laptop from "../assets/laptop.svg";
 import edu from "../assets/edu_icon.svg";
+import { Image } from "astro:assets";
 ---
 
 <section class="py-5 bg-light">
@@ -9,21 +10,21 @@ import edu from "../assets/edu_icon.svg";
     <div class="row text-center">
       <!-- Column 1 -->
       <div class="col-md-4 mb-4">
-        <img src={edu.src} alt="Icon 1" class="mb-3" />
+        <Image src={edu} alt="Icon 1" class="mb-3" />
         <h5>CXC Focused Lessons</h5>
         <p>Tailored for CXC Exam Success.</p>
       </div>
 
       <!-- Column 2 -->
       <div class="col-md-4 mb-4">
-        <img src={teacher.src} alt="Icon 2" class="mb-3" />
+        <Image src={teacher} alt="Icon 2" class="mb-3" />
         <h5>Expert Instructors</h5>
         <p>Skilled Simple Language Centre Tutors.</p>
       </div>
 
       <!-- Column 3 -->
       <div class="col-md-4 mb-4">
-        <img src={laptop.src} alt="Icon 3" class="mb-3" />
+        <Image src={laptop} alt="Icon 3" class="mb-3" />
         <h5>Flexible Learning</h5>
         <p>Online & In‑Person Options.</p>
       </div>
