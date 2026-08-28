@@ -1,0 +1,9 @@
+:root {
+  --color-primary: #16703D;
+  --color-secondary: #083045;
+  --color-accent: #8F602C;
+
+  /* Optional lighter shades for backgrounds */
+  --color-primary-light: #1d8a4a;
+  --color-secondary-light: #0b405a;
+}
