@@ -1,27 +1,29 @@
 ---
-import stars from "../assets/trophy.svg";
+/* CourseBenefits.astro */
 ---
 
-<div class="container text-center">
-  <h2 class="text-center">Course Benefits</h2>
-  <hr />
-  <div class="row align-items-center text-center">
-    <div class="col">
-      <div class="">
-        <img src={stars.src} alt="PC Display" width="24px" />REEST
-      </div>
-      <div class="col">
-        <div class="">
-          <img src={stars.src} alt="PC Display" width="24px" />REEST
-        </div>
-      </div>
-    </div>
-    <div class="row align-items-center text-center">
-      <div class="col">
-        <div class="">
-          <img src={stars.src} alt="PC Display" width="24px" />REEST
-        </div>
-      </div>
-    </div>
+<section class="container my-5">
+  <div class="card shadow-sm p-4">
+    <h2 class="text-center text-primary mb-4">Course Benefits</h2>
+    <ul class="list-unstyled">
+      <li class="d-flex align-items-center mb-3">
+        <span class="text-warning me-2">
+          <i class="bi bi-check-circle-fill"></i>
+        </span>
+        Step-by-step grammar explanations
+      </li>
+      <li class="d-flex align-items-center mb-3">
+        <span class="text-warning me-2">
+          <i class="bi bi-check-circle-fill"></i>
+        </span>
+        Practice past CXC papers
+      </li>
+      <li class="d-flex align-items-center mb-3">
+        <span class="text-warning me-2">
+          <i class="bi bi-check-circle-fill"></i>
+        </span>
+        Accessible resources for all levels
+      </li>
+    </ul>
   </div>
-</div>
+</section>
