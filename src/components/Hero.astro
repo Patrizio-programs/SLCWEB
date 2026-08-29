@@ -1,0 +1,68 @@
+---
+
+---
+
+<section>
+  <!-- Hero Section -->
+  <header class="hero-section text-white">
+    <div class="container hero-content">
+      <div class="extra div">
+        <button class="btn btn-primary btn-lg">✨Enter Class✨</button>
+      </div>
+    </div>
+  </header>
+</section>
+
+<style>
+  .hero-section {
+    background: url("../assets/hero.png") no-repeat center center;
+    background-size: cover;
+    min-height: 100vh; /* full viewport height */
+  }
+
+  .hero-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    max-width: 700px;
+  }
+
+  .extra.div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .btn {
+    position: relative;
+    top: auto;
+    left: auto;
+  }
+
+  @media (max-width: 600px) {
+    .hero-section {
+      background: url("../assets/Mobilehero.png") no-repeat center center;
+      background-size: cover;
+      max-height: 350px;
+    }
+
+    .hero-content {
+      grid-template-columns: 1fr;
+    }
+
+    .extra.div {
+      justify-content: center;
+    }
+  }
+
+  @media (min-width: 769px) {
+    .hero-content {
+      grid-template-columns: 1fr;
+    }
+
+    .extra.div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+</style>
