@@ -7,6 +7,8 @@
   <header class="hero-section text-white">
     <div class="container hero-content">
       <div class="extra div">
+        <h1 class="hero-title">SLC COURSES</h1>
+        <p class="hero-subtitle">Join our community of learners today!</p>
         <button class="btn btn-primary btn-lg">✨Enter Class✨</button>
       </div>
     </div>
@@ -30,8 +32,18 @@
 
   .extra.div {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 1rem;
+  }
+
+  .hero-title {
+    display: none;
+  }
+
+  .hero-subtitle {
+    display: none;
   }
 
   .btn {
@@ -42,7 +54,7 @@
 
   @media (max-width: 600px) {
     .hero-section {
-      background: url("../assets/Mobilehero.png") no-repeat center center;
+      background: linear-gradient(135deg, #16703d, #1a8c4a);
       background-size: cover;
       max-height: 350px;
     }
@@ -52,7 +64,19 @@
     }
 
     .extra.div {
+      display: flex;
+      flex-direction: column;
       justify-content: center;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .hero-title {
+      display: block;
+    }
+
+    .hero-subtitle {
+      display: block;
     }
   }
 
@@ -63,8 +87,18 @@
 
     .extra.div {
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
+      gap: 1rem;
+    }
+
+    .hero-title {
+      display: none;
+    }
+
+    .hero-subtitle {
+      display: none;
     }
   }
 </style>
