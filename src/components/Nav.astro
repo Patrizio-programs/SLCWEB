@@ -1,6 +1,12 @@
 ---
 import logo from "../assets/logo_nobg.png";
 import { Image } from "astro:assets";
+import { client } from "../../tina/__generated__/client";
+
+const query = await client.queries.nav({
+  relativePath: "nav.md",
+});
+const nav = query.data.nav;
 ---
 
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -29,13 +35,15 @@ import { Image } from "astro:assets";
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav mx-auto">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/">Home</a>
+          <a class="nav-link active" aria-current="page" href={nav.nav1Link}
+            >{nav.nav1Label}</a
+          >
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/resources">Resources</a>
+          <a class="nav-link" href={nav.nav2Link}>{nav.nav2Label}</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Pricing</a>
+          <a class="nav-link" href={nav.nav3Link}>{nav.nav3Label}</a>
         </li>
       </ul>
       <button

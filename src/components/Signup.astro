@@ -1,15 +1,23 @@
 ---
+import { client } from "../../tina/__generated__/client";
 
+const query = await client.queries.hero({
+  relativePath: "Prepare-for-Success-in-CXC-Spanish.md",
+});
+const hero = query.data.hero;
 ---
 
 <section class="hero-section">
   <div class="container text-center">
-    <h1 class="hero-title">Prepare for Success in CXC Spanish</h1>
+    <h1 class="hero-title">
+      {hero.heroTitle}
+    </h1>
     <p class="hero-text">
-      Master the Spanish Language and Ace your exams with our comprehensive and
-      engaging courses.
+      {
+        "Master the Spanish Language and Ace your exams with our comprehensive and engaging courses."
+      }
     </p>
-    <button class="btn btn-lg hero-button">Sign Up Now</button>
+    <button class="btn btn-lg hero-button">{"Sign Up Now"}</button>
   </div>
 </section>
 

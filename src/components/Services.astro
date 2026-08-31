@@ -1,0 +1,97 @@
+---
+/* Services.astro */
+
+import { client } from "../../tina/__generated__/client";
+const query = await client.queries.services({
+  relativePath: "services.md",
+});
+
+const services = query.data.services;
+---
+
+<style>
+  .services-section {
+    background: linear-gradient(
+      135deg,
+      var(--color-secondary),
+      var(--color-primary)
+    );
+  }
+
+  .service-icon {
+    font-size: 2rem;
+    color: var(--color-accent);
+  }
+
+  .border-top-primary {
+    border-top: 6px solid var(--color-accent);
+  }
+</style>
+
+<section class="services-section py-5 text-center text-white">
+  <div class="container">
+    <h2 class="fw-bold mb-2" style="color: white;">What We Offer</h2>
+    <p class="mb-5" style="color: white;">
+      Empowering learners through clear, engaging and simple language
+      experiences
+    </p>
+
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-3">
+        <div class="card h-100 shadow border-0 border-top-primary text-start">
+          <div class="card-body">
+            <div class="service-icon mb-3">📘</div>
+            <h3 class="h5 fw-bold" style="color: var(--color-primary);">
+              {services.service1?.serviceTitle}
+            </h3>
+            <p class="text-muted">
+              {services.service1?.serviceText}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-3">
+        <div class="card h-100 shadow border-0 border-top-primary text-start">
+          <div class="card-body">
+            <div class="service-icon mb-3">🌍</div>
+            <h3 class="h5 fw-bold" style="color: var(--color-primary);">
+              {services.service2?.serviceTitle}
+            </h3>
+            <p class="text-muted">
+              {services.service2?.serviceText}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-3">
+        <div class="card h-100 shadow border-0 border-top-primary text-start">
+          <div class="card-body">
+            <div class="service-icon mb-3">💻</div>
+            <h3 class="h5 fw-bold" style="color: var(--color-primary);">
+              {services.service3?.serviceTitle}
+            </h3>
+            <p class="text-muted">
+              {services.service3?.serviceText}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-3">
+        <div class="card h-100 shadow border-0 border-top-primary text-start">
+          <div class="card-body">
+            <div class="service-icon mb-3">🛠️</div>
+            <h3 class="h5 fw-bold" style="color: var(--color-primary);">
+              {services.service4?.serviceTitle}
+            </h3>
+            <p class="text-muted">
+              {services.service4?.serviceText}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

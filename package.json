@@ -6,24 +6,35 @@
     "node": ">=22.12.0"
   },
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
+    "dev": "tinacms dev -c \"astro dev\"",
+    "build": "tinacms build && astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/markdoc": "^2.0.8",
+    "@astrojs/node": "^11.1.4",
     "@astrojs/partytown": "^2.1.7",
     "@astrojs/react": "^6.0.4",
+    "@keystatic/astro": "^6.0.0",
+    "@keystatic/core": "^0.6.9",
     "@popperjs/core": "^2.11.8",
+    "@tinacms/astro": "^0.6.1",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.5",
     "astro": "^7.2.9",
     "bootstrap": "^5.3.8",
     "bootstrap-icons": "^1.13.1",
     "react": "^19.2.8",
-    "react-dom": "^19.2.8"
+    "react-dom": "^19.2.8",
+    "tinacms": "^3.12.1"
   },
   "allowScripts": {
     "esbuild": true
-  }
+  },
+  "devDependencies": {
+    "@tinacms/cli": "^2.6.1",
+    "@types/node": "^26.4.0"
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }
