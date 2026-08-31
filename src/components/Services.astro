@@ -26,6 +26,17 @@ const services = query.data.services;
   .border-top-primary {
     border-top: 6px solid var(--color-accent);
   }
+
+  .card {
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15) !important;
+  }
 </style>
 
 <section class="services-section py-5 text-center text-white">

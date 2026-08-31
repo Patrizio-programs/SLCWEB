@@ -9,7 +9,9 @@
       <div class="extra div">
         <h1 class="hero-title">SLC COURSES</h1>
         <p class="hero-subtitle">Join our community of learners today!</p>
-        <button class="btn btn-primary btn-lg">✨Enter Class✨</button>
+        <button id="signUpBtn" class="btn border-info btn-lg"
+          >✨Enter Class✨</button
+        >
       </div>
     </div>
   </header>
@@ -19,7 +21,18 @@
   .hero-section {
     background: url("../assets/mainhero.png") no-repeat center center;
     background-size: cover;
-    min-height: 80vh; /* full viewport height */
+    min-height: 80vh;
+  }
+
+  #signUpBtn {
+    border-radius: 30px;
+    color: white;
+    background-color: var(--color-primary);
+    transition: all 0.3s ease;
+  }
+  #signUpBtn:hover {
+    background-color: white;
+    color: var(--color-primary);
   }
 
   .hero-content {
