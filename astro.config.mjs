@@ -8,6 +8,7 @@ import markdoc from "@astrojs/markdoc";
 // https://astro.build/config
 export default defineConfig({
   integrations: [react(), partytown(), markdoc()],
-  output: "static", // must be inside the config object
+  output: "server",
+  adapter: "netlify" // must be inside the config object
   // also inside the config object
 });
