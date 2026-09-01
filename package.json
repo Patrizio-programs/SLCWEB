@@ -27,6 +27,7 @@
     "bootstrap-icons": "^1.13.1",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
+    "slate-dom": "^0.126.0",
     "tinacms": "^3.12.1"
   },
   "allowScripts": {
