@@ -190,6 +190,33 @@ export default defineConfig({
           },
         ],
       },
+      {
+        name: "socials",
+        label: "Socials",
+        path: "content/socials",
+        fields: [
+          {
+            type: "string",
+            name: "facebook",
+            label: "Facebook",
+          },
+          {
+            type: "string",
+            name: "instagram",
+            label: "Instagram",
+          },
+          {
+            type: "string",
+            name: "youtube",
+            label: "YouTube",
+          },
+          {
+            type: "string",
+            name: "linkedin",
+            label: "LinkedIn",
+          },
+        ],
+      },
       
       // add new schema after this line
     ],

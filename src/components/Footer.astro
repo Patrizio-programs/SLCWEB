@@ -1,5 +1,9 @@
 ---
-
+import { client } from "../../tina/__generated__/client";
+const query = await client.queries.socials({
+  relativePath: "socials.md",
+});
+const socials = query.data.socials;
 ---
 
 <footer class="bg-body-tertiary text-center">
@@ -13,7 +17,9 @@
           data-mdb-ripple-init
           class="btn text-white btn-floating m-1"
           style="background-color: #3b5998;"
-          href="#!"
+          href={socials.facebook}
+          ,
+          target="_blank"
           role="button"><i class="fab fa-facebook-f"></i></a
         >
 
@@ -22,7 +28,9 @@
           data-mdb-ripple-init
           class="btn text-white btn-floating m-1"
           style="background-color: #ac2bac;"
-          href="#!"
+          target="_blank"
+          href={socials.instagram}
+          ,
           role="button"><i class="fab fa-instagram"></i></a
         >
 
@@ -31,7 +39,9 @@
           data-mdb-ripple-init
           class="btn text-white btn-floating m-1"
           style="background-color: #0082ca;"
-          href="#!"
+          href={socials.linkedin}
+          ,
+          target="_blank"
           role="button"><i class="fab fa-linkedin-in"></i></a
         >
         <!-- Youtube -->
@@ -39,7 +49,9 @@
           data-mdb-ripple-init
           class="btn text-white btn-floating m-1"
           style="background-color: #ff0000;"
-          href="#!"
+          href={socials.youtube}
+          ,
+          target="_blank"
           role="button"><i class="fab fa-youtube"></i></a
         >
       </section>
