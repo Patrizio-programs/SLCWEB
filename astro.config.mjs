@@ -10,6 +10,6 @@ import markdoc from "@astrojs/markdoc";
 export default defineConfig({
   integrations: [react(), partytown(), markdoc()],
   output: "server",
-  adapter: netlify // must be inside the config object
+  adapter: netlify(), // must be inside the config object
   // also inside the config object
 });
