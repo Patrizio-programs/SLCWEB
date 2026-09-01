@@ -1,5 +1,6 @@
 // @ts-check
 import { defineConfig } from "astro/config";
+import netlify from "@astrojs/netlify/functions";
 
 import react from "@astrojs/react";
 import partytown from "@astrojs/partytown";
