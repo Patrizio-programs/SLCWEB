@@ -18,6 +18,8 @@
     "@astrojs/partytown": "^2.1.7",
     "@astrojs/react": "^6.0.4",
     "@astrojs/vercel": "^11.0.9",
+    "@netlify/dev": "^5.0.2",
+    "@netlify/edge-functions-dev": "^2.0.1",
     "@popperjs/core": "^2.11.8",
     "@tinacms/astro": "^0.6.1",
     "@types/react": "^19.2.18",
