@@ -217,6 +217,54 @@ export default defineConfig({
           },
         ],
       },
+      {
+        name: "courses",
+        label: "Courses",
+        path: "content/courses",
+        fields: [
+          {
+            type: "string",
+            name: "lessonNumber",
+            label: "Lesson Number",
+          },
+          {
+            type: "string",
+            name: "ClassBadge",
+            label: "Class Badge",
+          },
+          {
+            type: "string",
+            name: "ClassDescription",
+            label: "Class Description",
+     
+          },
+          {
+            type: "string",
+            name: "detail1",
+            label: "Detail 1",
+          },
+          {
+            type: "string",
+            name: "detail2",
+            label: "Detail 2",
+          },
+          {
+            type: "string",
+            name: "detail3",
+            label: "Detail 3",
+          },
+          {
+            type: "string",
+            name: "detail4",
+            label: "Detail 4",
+          },
+          {
+            type: "string",
+            name: "enrollFormLink",
+            label: "Enroll Form Link",
+          },
+        ],
+      },
       
       // add new schema after this line
     ],

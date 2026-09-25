@@ -1,0 +1,55 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Footer from "../components/Footer.astro";
+import LandingNav from "../components/CXC/LandingNav.astro";
+---
+
+<Layout>
+  <LandingNav />
+
+  <section class="container my-5">
+  <div class="row justify-content-center">
+    <!-- General Courses Card -->
+    <div class="col-md-5 mb-4">
+      <div class="card shadow-sm h-100 text-center">
+        <div class="card-body">
+          <h3 class="card-title mb-3">General Courses</h3>
+          <p class="card-text">Courses for all ages and all levels.</p>
+          <a href="https://tally.so/r/lbQyjV" target="_blank" class="btn btn-primary">Select</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- CXC Course Card -->
+    <div class="col-md-5 mb-4">
+      <div class="card shadow-sm h-100 text-center">
+        <div class="card-body">
+          <h3 class="card-title mb-3">Student Courses</h3>
+          <p class="card-text">Focused lessons for students at high school level. Exam preparation for CXC.</p>
+          <a href="https://tally.so/r/J9PgNz" target="_blank" class="btn btn-success">Select</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <Footer />
+</Layout>
+
+
+<style>
+  .card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  section {
+    height: 70vh;
+  }
+
+
+</style>

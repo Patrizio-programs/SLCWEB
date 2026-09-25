@@ -1,5 +1,27 @@
 ---
+import { client }  from "../../../tina/__generated__/client"
+const query = await client.queries.courses({
+  relativePath: "BeginnerCourse.md",
 
+});
+//this is the data for the beginner course
+const beginner = query.data.courses;
+const intermediateQuery = await client.queries.courses({
+  relativePath: "IntermediateCourse.md",
+});
+//this is the data for the intermediate course
+const intermediate = intermediateQuery.data.courses;
+const advancedQuery = await client.queries.courses({
+  relativePath: "AdvancedCourse.md",
+});
+//this is the data for the advanced course
+const advanced = advancedQuery.data.courses;
+
+const CXC = await client.queries.courses({
+  relativePath: "CXC.md",
+});
+//this is the data for the CXC prep course
+const cxc = CXC.data.courses;
 ---
 
 <section id="courses" class="py-5 bg-light">
@@ -18,32 +40,32 @@
           <div class="card-body d-flex flex-column p-4">
             <div class="d-flex justify-content-between align-items-center mb-3">
               <span class="badge bg-success px-3 py-2 rounded-pill fw-normal">Beginner</span>
-              <small class="text-muted fw-semibold">28 Lessons</small>
+              <small class="text-muted fw-semibold">{beginner.lessonNumber}</small>
             </div>
 
             <h3 class="h4 card-title fw-bold text-dark mb-2">Basic Level</h3>
             <p class="card-text text-secondary small mb-4">
-              Build a strong foundation in grammar, essential vocabulary, and everyday conversational skills through interactive practice.
+              {beginner.ClassDescription}
             </p>
 
             <hr class="text-muted opacity-25 mb-3" />
 
             <ul class="list-unstyled flex-grow-1 mb-4">
               <li class="d-flex align-items-center mb-2 small text-secondary">
-                <span class="text-primary me-2">✓</span> Core grammar & phrasebook vocabulary
+                <span class="text-primary me-2">✓</span> {beginner.detail1}
               </li>
               <li class="d-flex align-items-center mb-2 small text-secondary">
-                <span class="text-primary me-2">✓</span> Basic pronunciation & listening drills
+                <span class="text-primary me-2">✓</span> {beginner.detail2}
               </li>
               <li class="d-flex align-items-center mb-2 small text-secondary">
-                <span class="text-primary me-2">✓</span> Interactive conversational practice
+                <span class="text-primary me-2">✓</span> {beginner.detail3}
               </li>
               <li class="d-flex align-items-center mb-2 small text-secondary">
-                <span class="text-primary me-2">✓</span> Weekly exercises & feedback
+                <span class="text-primary me-2">✓</span> {beginner.detail4}
               </li>
             </ul>
 
-            <a href="#enroll" class="btn btn-outline-primary rounded-pill w-100 fw-bold py-2 mt-auto">
+            <a href={beginner.enrollFormLink} target="_blank" class="btn btn-outline-primary rounded-pill w-100 fw-bold py-2 mt-auto">
               Enroll Now
             </a>
           </div>
@@ -55,32 +77,32 @@
           <div class="card-body d-flex flex-column p-4">
             <div class="d-flex justify-content-between align-items-center mb-3">
               <span class="badge bg-primary px-3 py-2 rounded-pill fw-normal">Popular</span>
-              <small class="text-muted fw-semibold">16 Lessons</small>
+              <small class="text-muted fw-semibold">{intermediate.lessonNumber}</small>
             </div>
 
             <h3 class="h4 card-title fw-bold text-dark mb-2">Intermediate Level</h3>
             <p class="card-text text-secondary small mb-4">
-              Expand your vocabulary, master complex sentence structures, and improve fluency for professional and social interactions.
+              {intermediate.ClassDescription}
             </p>
 
             <hr class="text-muted opacity-25 mb-3" />
 
             <ul class="list-unstyled flex-grow-1 mb-4">
               <li class="d-flex align-items-center mb-2 small text-secondary">
-                <span class="text-primary me-2">✓</span> Advanced grammar & idioms
+                <span class="text-primary me-2">✓</span> {intermediate.detail1}
               </li>
               <li class="d-flex align-items-center mb-2 small text-secondary">
-                <span class="text-primary me-2">✓</span> Fluency & accent refinement
+                <span class="text-primary me-2">✓</span> {intermediate.detail2}
               </li>
               <li class="d-flex align-items-center mb-2 small text-secondary">
-                <span class="text-primary me-2">✓</span> Reading comprehension & writing
+                <span class="text-primary me-2">✓</span> {intermediate.detail3}
               </li>
               <li class="d-flex align-items-center mb-2 small text-secondary">
-                <span class="text-primary me-2">✓</span> Group discussions & debate
+                <span class="text-primary me-2">✓</span> {intermediate.detail4}
               </li>
             </ul>
 
-            <a href="#enroll" class="btn btn-outline-primary rounded-pill w-100 fw-bold py-2 mt-auto">
+            <a href={intermediate.enrollFormLink} target="_blank" class="btn btn-outline-primary rounded-pill w-100 fw-bold py-2 mt-auto">
               Enroll Now
             </a>
           </div>
@@ -92,32 +114,34 @@
           <div class="card-body d-flex flex-column p-4">
             <div class="d-flex justify-content-between align-items-center mb-3">
               <span class="badge bg-dark px-3 py-2 rounded-pill fw-normal">Mastery</span>
-              <small class="text-muted fw-semibold">15 Lessons</small>
+              <small class="text-muted fw-semibold">{advanced.lessonNumber}</small>
             </div>
 
             <h3 class="h4 card-title fw-bold text-dark mb-2">Advanced Level</h3>
             <p class="card-text text-secondary small mb-4">
-              Achieve native-like fluency, master nuanced expression, and refine writing for academic or executive business contexts.
+              {advanced.ClassDescription}
             </p>
 
             <hr class="text-muted opacity-25 mb-3" />
 
             <ul class="list-unstyled flex-grow-1 mb-4">
               <li class="d-flex align-items-center mb-2 small text-secondary">
-                <span class="text-primary me-2">✓</span> Intense language immersion & practice
+                <span class="text-primary me-2">✓</span> {advanced.detail1}
               </li>
               <li class="d-flex align-items-center mb-2 small text-secondary">
-                <span class="text-primary me-2">✓</span> Nuanced expression & idiom mastery
+                <span class="text-primary me-2">✓</span> {advanced.detail2}
               </li>
               <li class="d-flex align-items-center mb-2 small text-secondary">
-                <span class="text-primary me-2">✓</span> Spanish media analysis
+                <span class="text-primary me-2">✓</span> {advanced.detail3}
               </li>
+             
               <li class="d-flex align-items-center mb-2 small text-secondary">
-                <span class="text-primary me-2">✓</span> Writing and advanced grammer
-              </li>
+                <span class="text-primary me-2">✓</span> {advanced.detail4}
+              </li>         
             </ul>
+        
 
-            <a href="#enroll" class="btn btn-outline-primary rounded-pill w-100 fw-bold py-2 mt-auto">
+            <a href={advanced.enrollFormLink} target="_blank"class="btn btn-outline-primary rounded-pill w-100 fw-bold py-2 mt-auto">
               Enroll Now
             </a>
           </div>
@@ -129,32 +153,32 @@
           <div class="card-body d-flex flex-column p-4">
             <div class="d-flex justify-content-between align-items-center mb-3">
               <span class="badge bg-warning text-dark px-3 py-2 rounded-pill fw-normal">Exam Prep</span>
-              <small class="text-muted fw-semibold">30 Lessons</small>
+              <small class="text-muted fw-semibold">{cxc.lessonNumber}</small>
             </div>
 
             <h3 class="h4 card-title fw-bold text-dark mb-2">CXC Preparation</h3>
             <p class="card-text text-secondary small mb-4">
-              Targeted preparation for the CXC / CSEC language examination covering paper components, oral exams, and past papers.
+              {cxc.ClassDescription}
             </p>
 
             <hr class="text-muted opacity-25 mb-3" />
 
             <ul class="list-unstyled flex-grow-1 mb-4">
               <li class="d-flex align-items-center mb-2 small text-secondary">
-                <span class="text-primary me-2">✓</span> In-depth syllabus topic breakdown
+                <span class="text-primary me-2">✓</span> {cxc.detail1}
               </li>
               <li class="d-flex align-items-center mb-2 small text-secondary">
-                <span class="text-primary me-2">✓</span> Past paper walkthroughs & mock tests
+                <span class="text-primary me-2">✓</span> {cxc.detail2}
               </li>
               <li class="d-flex align-items-center mb-2 small text-secondary">
-                <span class="text-primary me-2">✓</span> Oral exam practice & feedback
+                <span class="text-primary me-2">✓</span> {cxc.detail3}
               </li>
               <li class="d-flex align-items-center mb-2 small text-secondary">
-                <span class="text-primary me-2">✓</span> SBA guidance & scoring strategies
+                <span class="text-primary me-2">✓</span> {cxc.detail4}
               </li>
             </ul>
 
-            <a href="#enroll" class="btn btn-outline-primary rounded-pill w-100 fw-bold py-2 mt-auto">
+            <a href={cxc.enrollFormLink} target="_blank" class="btn btn-outline-primary rounded-pill w-100 fw-bold py-2 mt-auto">
               Enroll Now
             </a>
           </div>
