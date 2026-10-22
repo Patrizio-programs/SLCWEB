@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>🧩 Verb Builder — Spanish Conjugation Game</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+  body{ background:linear-gradient(180deg,#eaf1ff 0,#fff 340px); min-height:100vh; }
+  .tile{ display:inline-flex; align-items:center; justify-content:center; min-width:76px;
+         padding:.55rem 1.1rem; font-size:1.45rem; font-weight:700; line-height:1;
+         border-radius:.8rem; border:2px solid transparent; user-select:none; }
+  .tile.ending{ background:#fff8e1; border-color:#ffc107; color:#6b5200; cursor:grab;
+                transition:transform .12s, box-shadow .12s, opacity .2s; }
+  .tile.ending:hover{ transform:translateY(-3px); box-shadow:0 .4rem .8rem rgba(255,193,7,.35); }
+  .tile.ending:active{ cursor:grabbing; transform:translateY(0); }
+  .tile.dragging{ opacity:.45; }
+  .tile.stem{ background:#0d6efd; color:#fff; border-color:#0a58ca; }
+  .tile.attempt{ background:#f8d7da; border-color:#dc3545; color:#842029; }
+  .tile.correct{ background:#d1e7dd; border-color:#198754; color:#0f5132; }
+  .tile.revealed{ background:#ffe69c; border-color:#997404; color:#664d03; }
+  .tile.used{ opacity:.25; filter:grayscale(1); transform:scale(.94); pointer-events:none; box-shadow:none; }
+
+  #slot{ width:120px; height:64px; border:3px dashed #adb5bd; border-radius:.8rem;
+         display:flex; align-items:center; justify-content:center; font-size:1.45rem;
+         font-weight:700; background:#f8f9fa; transition:all .15s; }
+  #slot:empty::before{ content:"＋"; color:#adb5bd; font-size:1.6rem; }
+  #slot.over{ border-color:#0d6efd; background:#e7f1ff; box-shadow:0 0 0 .25rem rgba(13,110,253,.2); }
+  #slot.filled{ border-style:solid; border-color:#198754; background:#f2fbf6; }
+
+  @keyframes shake{ 0%,100%{transform:translateX(0)} 20%{transform:translateX(-7px)}
+    40%{transform:translateX(7px)} 60%{transform:translateX(-5px)} 80%{transform:translateX(5px)} }
+  .shake{ animation:shake .4s; }
+  @keyframes pop{ 0%{transform:scale(.6)} 70%{transform:scale(1.12)} 100%{transform:scale(1)} }
+  .pop{ animation:pop .3s; }
+  #feedback{ min-height:2em; }
+</style>
+</head>
+<body>
+<div class="container py-4" style="max-width:920px">
+
+  <div class="text-center mb-3">
+    <h1 class="fw-bold">🧩 Verb Builder</h1>
+    <p class="text-muted mb-2">Drag a Spanish ending onto the stem — or just click it — to conjugate the verb.</p>
+    <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="collapse" data-bs-target="#howto">❔ How to play</button>
+  </div>
+
+  <div class="collapse mb-3" id="howto">
+    <div class="card card-body small">
+      <ul class="mb-0">
+        <li>Pick the tenses you want to practice (takes effect on the next round).</li>
+        <li>Each round shows a <strong>pronoun</strong>, an <strong>infinitive</strong>, and the <strong>stem</strong> (blue block).</li>
+        <li><strong>Drag</strong> the right ending into the dashed box, or simply <strong>click</strong> it.</li>
+        <li>Scoring: first try = <strong>10 pts + 2 streak bonus</strong> · each miss = −3 (minimum 2) · miss or skip resets the streak.</li>
+        <li>10 rounds per game. All verbs are regular in the included tenses.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Tense selection -->
+  <div class="card mb-3">
+    <div class="card-body py-2 d-flex flex-wrap align-items-center gap-3">
+      <span class="fw-semibold small text-uppercase text-secondary">Tenses</span>
+      <div class="d-flex flex-wrap gap-2" id="tenseChecks"></div>
+    </div>
+  </div>
+
+  <div class="card shadow-sm mb-4">
+    <div class="card-header d-flex justify-content-between align-items-center flex-wrap gap-2">
+      <div>Round <span id="roundNum" class="fw-bold">1</span> / 10</div>
+      <div class="d-flex gap-2">
+        <span class="badge text-bg-primary">⭐ <span id="score">0</span></span>
+        <span class="badge text-bg-danger">🔥 Streak <span id="streak">0</span></span>
+        <span class="badge text-bg-secondary">🏆 Best <span id="best">0</span></span>
+      </div>
+    </div>
+
+    <!-- GAME -->
+    <div class="card-body" id="gameArea">
+      <div class="progress mb-4" style="height:8px"><div id="prog" class="progress-bar" style="width:0%"></div></div>
+
+      <div class="text-center mb-2 d-flex flex-wrap justify-content-center align-items-center gap-2">
+        <span class="badge rounded-pill text-bg-dark fs-6 px-3 py-2" id="pronoun">yo</span>
+        <span class="fs-3 fw-bold" id="infinitive">comer</span>
+        <span class="fs-5 text-muted" id="infEn">(to eat)</span>
+        <span class="badge text-bg-warning fs-6" id="tenseBadge">Presente</span>
+      </div>
+      <p class="text-center text-muted mb-0" id="gloss">≈ “I eat”</p>
+
+      <div class="d-flex justify-content-center align-items-center gap-2 my-4">
+        <div class="tile stem" id="stemTile">com</div>
+        <div id="slot" class="mx-1"></div>
+      </div>
+
+      <div id="feedback" class="text-center fs-5 fw-semibold mb-3 text-secondary" aria-live="polite"></div>
+
+      <div class="d-flex flex-wrap justify-content-center gap-2" id="pool"></div>
+
+      <div class="text-center text-muted small mt-2">
+        <span class="tile stem align-middle" style="font-size:.75rem;padding:.15rem .5rem">stem</span> fixed ·
+        <span class="tile ending align-middle" style="font-size:.75rem;padding:.15rem .5rem">ending</span> your pick
+      </div>
+
+      <div class="d-flex justify-content-center gap-2 mt-4">
+        <button class="btn btn-outline-secondary" id="skipBtn">Skip / reveal 👀</button>
+        <button class="btn btn-primary" id="nextBtn" disabled>Next →</button>
+      </div>
+    </div>
+
+    <!-- SUMMARY -->
+    <div class="card-body text-center d-none" id="summaryArea">
+      <h2 class="mb-1">🎉 ¡Terminaste!</h2>
+      <p class="text-muted">10 rounds done — here's your report card:</p>
+      <div class="row row-cols-3 g-3 my-3">
+        <div class="col"><div class="p-3 border rounded-3"><div class="fs-1">⭐</div><div class="fs-3 fw-bold" id="sumScore">0</div><div class="text-muted small">points</div></div></div>
+        <div class="col"><div class="p-3 border rounded-3"><div class="fs-1">🎯</div><div class="fs-3 fw-bold" id="sumAcc">0%</div><div class="text-muted small">first-try accuracy</div></div></div>
+        <div class="col"><div class="p-3 border rounded-3"><div class="fs-1">🔥</div><div class="fs-3 fw-bold" id="sumStreak">0</div><div class="text-muted small">best streak</div></div></div>
+      </div>
+      <p class="text-muted small">Tip: change the selected tenses above to focus your next practice.</p>
+      <button class="btn btn-primary btn-lg" id="againBtn">Play again 🔁</button>
+    </div>
+  </div>
+
+  <p class="text-center text-muted small">Construye el verbo · regular verbs · presente, pretérito, imperfecto, futuro, condicional, subjuntivo</p>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+"use strict";
+const ROUNDS = 10;
+
+const PERSONS  = ["yo","tú","él / ella / usted","nosotros / nosotras","vosotros / vosotras","ellos / ellas / ustedes"];
+const PERSON_EN= ["I","you","he / she","we","you all (Spain)","they / you all"];
+
+const VERBS = [
+  {inf:"hablar",   type:"ar", en:"speak", enPast:"spoke"},
+  {inf:"cantar",   type:"ar", en:"sing",  enPast:"sang"},
+  {inf:"bailar",   type:"ar", en:"dance", enPast:"danced"},
+  {inf:"comer",    type:"er", en:"eat",   enPast:"ate"},
+  {inf:"beber",    type:"er", en:"drink", enPast:"drank"},
+  {inf:"aprender", type:"er", en:"learn", enPast:"learned"},
+  {inf:"vender",   type:"er", en:"sell",  enPast:"sold"},
+  {inf:"vivir",    type:"ir", en:"live",  enPast:"lived"},
+  {inf:"escribir", type:"ir", en:"write", enPast:"wrote"},
+  {inf:"abrir",    type:"ir", en:"open",  enPast:"opened"}
+];
+
+const TENSES = {
+  presente:   {label:"Presente"},
+  preterito:  {label:"Pretérito"},
+  imperfecto: {label:"Imperfecto"},
+  futuro:     {label:"Futuro"},
+  condicional:{label:"Condicional"},
+  subjuntivo: {label:"Subjuntivo"}
+};
+
+// endings per tense, per verb class (-ar / -er / -ir), in person order yo→ellos
+const ENDINGS = {
+  presente: {
+    ar:["o","as","a","amos","áis","an"],
+    er:["o","es","e","emos","éis","en"],
+    ir:["o","es","e","imos","ís","en"] },
+  preterito: {
+    ar:["é","aste","ó","amos","asteis","aron"],
+    er:["í","iste","ió","imos","isteis","ieron"],
+    ir:["í","iste","ió","imos","isteis","ieron"] },
+  imperfecto: {
+    ar:["aba","abas","aba","ábamos","abais","aban"],
+    er:["ía","ías","ía","íamos","íais","ían"],
+    ir:["ía","ías","ía","íamos","íais","ían"] },
+  futuro: { // stem = whole infinitive
+    ar:["é","ás","á","emos","éis","án"],
+    er:["é","ás","á","emos","éis","án"],
+    ir:["é","ás","á","emos","éis","án"] },
+  condicional: { // stem = whole infinitive
+    ar:["ía","ías","ía","íamos","íais","ían"],
+    er:["ía","ías","ía","íamos","íais","ían"],
+    ir:["ía","ías","ía","íamos","íais","ían"] },
+  subjuntivo: {
+    ar:["e","es","e","emos","éis","en"],
+    er:["a","as","a","amos","áis","an"],
+    ir:["a","as","a","amos","áis","an"] }
+};
+
+/* ---------- DOM ---------- */
+const $ = id => document.getElementById(id);
+const els = { roundNum:$("roundNum"), score:$("score"), streak:$("streak"), best:$("best"),
+  prog:$("prog"), pronoun:$("pronoun"), infinitive:$("infinitive"), infEn:$("infEn"),
+  tenseBadge:$("tenseBadge"), gloss:$("gloss"), stemTile:$("stemTile"), slot:$("slot"),
+  feedback:$("feedback"), pool:$("pool"), nextBtn:$("nextBtn"), skipBtn:$("skipBtn"),
+  gameArea:$("gameArea"), summaryArea:$("summaryArea"), sumScore:$("sumScore"),
+  sumAcc:$("sumAcc"), sumStreak:$("sumStreak"), tenseChecks:$("tenseChecks") };
+
+let state = null, autoTimer = null, dragSrc = null, bestStreak = 0;
+let game  = {round:1, score:0, streak:0, firstTry:0};
+const used = new Set();
+
+/* ---------- helpers ---------- */
+const shuffle = a => { a=[...a]; for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; };
+const rand = n => Math.floor(Math.random()*n);
+const stemFor = (v,t) => (t==="futuro"||t==="condicional") ? v.inf : v.inf.slice(0,-2);
+
+function glossFor(v,t,p){
+  const pe = PERSON_EN[p];
+  switch(t){
+    case "presente":    return `“${pe} ${v.en}” — habit or happening now`;
+    case "preterito":   return `“${pe} ${v.enPast}” — completed past action`;
+    case "imperfecto":  return `“${pe} used to ${v.en}” — past habit / description`;
+    case "futuro":      return `“${pe} will ${v.en}”`;
+    case "condicional": return `“${pe} would ${v.en}”`;
+    case "subjuntivo":  return `“…that ${pe==="I"?"I":pe.toLowerCase()} ${v.en}…” — wishes, doubts, “que” clauses`;
+  }
+}
+
+function selectedTenses(){
+  const sel=[...document.querySelectorAll(".tense-cb:checked")].map(cb=>cb.value);
+  return sel.length ? sel : Object.keys(TENSES);
+}
+
+function pickRound(){
+  const tenses = selectedTenses();
+  if(used.size >= VERBS.length*tenses.length*6) used.clear();
+  let v,t,p,key,guard=0;
+  do{ v=VERBS[rand(VERBS.length)]; t=tenses[rand(tenses.length)]; p=rand(6);
+      key=v.inf+"|"+t+"|"+p; guard++;
+  }while(used.has(key) && guard<500);
+  used.add(key);
+  return {v,t,p};
+}
+
+function buildPool(v,t,correct){
+  const cls=v.type;
+  let d=shuffle([...new Set(ENDINGS[t][cls])].filter(e=>e!==correct)).slice(0,5);
+  if(d.length<5){ // pad with endings from other tenses of the same class
+    const others=new Set();
+    for(const tt in ENDINGS) if(tt!==t) ENDINGS[tt][cls].forEach(e=>others.add(e));
+    others.delete(correct);
+    for(const e of shuffle([...others])){ if(d.length>=5)break; if(!d.includes(e)) d.push(e); }
+  }
+  return shuffle([correct,...d]);
+}
+
+/* ---------- tiny sound fx ---------- */
+let audioCtx=null;
+function beep(f,d,type="sine",vol=.1,when=0){
+  try{
+    audioCtx = audioCtx || new (window.AudioContext||window.webkitAudioContext)();
+    const t0=audioCtx.currentTime+when, o=audioCtx.createOscillator(), g=audioCtx.createGain();
+    o.type=type; o.frequency.value=f;
+    g.gain.setValueAtTime(vol,t0); g.gain.exponentialRampToValueAtTime(.001,t0+d);
+    o.connect(g); g.connect(audioCtx.destination); o.start(t0); o.stop(t0+d);
+  }catch(e){}
+}
+
+/* ---------- tiles / drag & drop ---------- */
+function makeTile(text, cls, draggable){
+  const b=document.createElement("button");
+  b.type="button"; b.className="tile "+cls; b.textContent=text;
+  if(draggable){ b.draggable=true; b.dataset.end=text; wireDrag(b); }
+  return b;
+}
+function wireDrag(b){
+  b.addEventListener("dragstart",e=>{
+    dragSrc=b; b.classList.add("dragging");
+    e.dataTransfer.setData("text/plain",b.dataset.end);
+    e.dataTransfer.effectAllowed="move";
+  });
+  b.addEventListener("dragend",()=>{ b.classList.remove("dragging"); dragSrc=null; });
+  b.addEventListener("click",()=>placeEnding(b.dataset.end,b));
+}
+["dragenter","dragover"].forEach(ev=>els.slot.addEventListener(ev,e=>{ e.preventDefault(); els.slot.classList.add("over"); }));
+["dragleave","drop"].forEach(ev=>els.slot.addEventListener(ev,e=>{ e.preventDefault(); els.slot.classList.remove("over"); }));
+els.slot.addEventListener("drop",e=>{
+  const ending=e.dataTransfer.getData("text/plain");
+  if(ending && dragSrc) placeEnding(ending,dragSrc);
+});
+
+/* ---------- game flow ---------- */
+function newRound(){
+  clearTimeout(autoTimer);
+  const {v,t,p}=pickRound();
+  state={v,t,p,correct:ENDINGS[t][v.type][p],mistakes:0,locked:false};
+
+  els.roundNum.textContent=game.round;
+  els.prog.style.width=((game.round-1)/ROUNDS*100)+"%";
+  els.score.textContent=game.score;
+  els.streak.textContent=game.streak;
+  els.best.textContent=bestStreak;
+
+  els.pronoun.textContent=PERSONS[p];
+  els.infinitive.textContent=v.inf;
+  els.infEn.textContent=`(to ${v.en})`;
+  els.tenseBadge.textContent=TENSES[t].label;
+  els.gloss.textContent="≈ "+glossFor(v,t,p);
+  els.stemTile.textContent=stemFor(v,t);
+
+  els.slot.classList.remove("filled","over"); els.slot.innerHTML="";
+  els.feedback.className="text-center fs-5 fw-semibold mb-3 text-secondary";
+  els.feedback.textContent=`Build the ${TENSES[t].label} form for “${PERSONS[p].split(" /")[0]}” 👇`;
+
+  els.pool.innerHTML=""; els.pool.classList.remove("pe-none");
+  buildPool(v,t,state.correct).forEach(e=>els.pool.appendChild(makeTile(e,"ending",true)));
+
+  els.nextBtn.disabled=true; els.skipBtn.disabled=false;
+}
+
+function placeEnding(ending,srcBtn){
+  if(!state||state.locked) return;
+  ending===state.correct ? onCorrect(false) : onWrong(ending,srcBtn);
+}
+
+function onWrong(ending,srcBtn){
+  state.mistakes++;
+  srcBtn.classList.add("used"); srcBtn.disabled=true;
+  const t=makeTile(ending,"attempt",false);
+  els.slot.innerHTML=""; els.slot.appendChild(t); els.slot.classList.add("filled");
+  t.classList.add("shake");
+  beep(170,.22,"square",.09);
+  setTimeout(()=>{ t.remove(); if(!els.slot.hasChildNodes()) els.slot.classList.remove("filled"); },550);
+  els.feedback.className="text-center fs-5 fw-semibold mb-3 text-danger";
+  els.feedback.textContent=`❌ Not quite — now worth ${Math.max(2,10-3*state.mistakes)} pts. Try another ending!`;
+}
+
+function onCorrect(revealed){
+  state.locked=true;
+  els.slot.innerHTML="";
+  const t=makeTile(state.correct, revealed?"revealed":"correct", false);
+  els.slot.appendChild(t); els.slot.classList.add("filled"); t.classList.add("pop");
+  els.pool.classList.add("pe-none");
+  els.skipBtn.disabled=true;
+
+  const full=stemFor(state.v,state.t)+state.correct;
+  const gl=glossFor(state.v,state.t,state.p);
+  const first=!revealed && state.mistakes===0;
+  let pts=0;
+
+  if(!revealed){
+    pts=Math.max(2,10-3*state.mistakes);
+    if(first){ game.firstTry++; game.streak++; pts+=2; bestStreak=Math.max(bestStreak,game.streak); }
+    else game.streak=0;
+    game.score+=pts;
+    beep(523,.09); beep(659,.09,"sine",.1,.09); beep(784,.16,"sine",.1,.18);
+    els.feedback.className="text-center fs-5 fw-semibold mb-3 text-success";
+    els.feedback.innerHTML=`✅ <strong>${full}</strong> — ${gl} <span class="badge text-bg-success ms-1">+${pts}</span>`;
+  }else{
+    game.streak=0;
+    beep(392,.15,"sine",.08);
+    els.feedback.className="text-center fs-5 fw-semibold mb-3 text-warning-emphasis";
+    els.feedback.innerHTML=`👀 <strong>${full}</strong> — ${gl} <span class="fs-6">(revealed — no points)</span>`;
+  }
+
+  els.streak.textContent=game.streak;
+  els.best.textContent=bestStreak;
+  els.score.textContent=game.score;
+  els.prog.style.width=(game.round/ROUNDS*100)+"%";
+  els.nextBtn.disabled=false;
+  autoTimer=setTimeout(nextRound, revealed?2000:2600);
+}
+
+function nextRound(){
+  clearTimeout(autoTimer);
+  if(game.round>=ROUNDS){ endGame(); return; }
+  game.round++;
+  newRound();
+}
+
+function endGame(){
+  state=null;
+  els.gameArea.classList.add("d-none");
+  els.summaryArea.classList.remove("d-none");
+  els.sumScore.textContent=game.score;
+  els.sumAcc.textContent=Math.round(game.firstTry/ROUNDS*100)+"%";
+  els.sumStreak.textContent=bestStreak;
+  beep(523,.12); beep(659,.12,"sine",.1,.12); beep(784,.2,"sine",.1,.24); beep(1046,.3,"sine",.1,.36);
+}
+
+function playAgain(){
+  game={round:1,score:0,streak:0,firstTry:0};
+  used.clear();
+  els.summaryArea.classList.add("d-none");
+  els.gameArea.classList.remove("d-none");
+  newRound();
+}
+
+/* ---------- init ---------- */
+Object.entries(TENSES).forEach(([key,t])=>{
+  const wrap=document.createElement("div");
+  wrap.className="form-check form-check-inline mb-0";
+  wrap.innerHTML=`<input class="form-check-input tense-cb" type="checkbox" value="${key}" id="cb-${key}" checked>
+                  <label class="form-check-label" for="cb-${key}">${t.label}</label>`;
+  els.tenseChecks.appendChild(wrap);
+});
+els.nextBtn.addEventListener("click",nextRound);
+els.skipBtn.addEventListener("click",()=>{ if(state&&!state.locked) onCorrect(true); });
+ $("againBtn").addEventListener("click",playAgain);
+document.addEventListener("keydown",e=>{ if(e.key==="Enter"&&!els.nextBtn.disabled) nextRound(); });
+newRound();
+</script>
+</body>
+</html>

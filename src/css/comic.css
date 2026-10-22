@@ -1,0 +1,317 @@
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Outfit:wght@400;600;700;800&display=swap');
+
+
+/* --------------------------------
+   Base
+-------------------------------- */
+
+body {
+    margin: 0;
+    font-family: "Outfit", sans-serif;
+}
+
+.comic-page {
+    min-height: 100vh;
+    background-color: #f8fafc;
+
+    background-image:
+        radial-gradient(#cbd5e1 1.5px, transparent 1.5px);
+
+    background-size: 16px 16px;
+}
+
+.comic-container {
+    max-width: 960px;
+}
+
+
+/* --------------------------------
+   Fonts
+-------------------------------- */
+
+.comic-font {
+    font-family: "Bangers", cursive;
+    letter-spacing: 1px;
+}
+
+
+/* --------------------------------
+   Main title
+-------------------------------- */
+
+.comic-title {
+    background: #facc15;
+
+    border: 4px solid #0f172a;
+
+    border-radius: 16px;
+
+    padding: 12px 30px;
+
+    transform: rotate(-1deg);
+
+    box-shadow:
+        6px 6px 0 #0f172a;
+}
+
+
+/* --------------------------------
+   Comic panels
+-------------------------------- */
+
+.comic-panel {
+    border: 4px solid #0f172a;
+
+    box-shadow:
+        6px 6px 0 #0f172a;
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.comic-panel:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        10px 10px 0 #0f172a;
+}
+
+
+/* --------------------------------
+   Panel badge
+-------------------------------- */
+
+.panel-badge {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    background: #0f172a;
+    color: white;
+
+    padding: 4px 16px;
+
+    border-radius:
+        0 0 14px 0;
+
+    font-size: 18px;
+}
+
+
+/* --------------------------------
+   Character layout
+-------------------------------- */
+
+.character-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding-top: 20px;
+}
+
+.character {
+    min-width: 80px;
+}
+
+.character-name {
+    display: block;
+
+    margin-top: 4px;
+
+    font-size: 20px;
+}
+
+
+/* --------------------------------
+   Avatars
+-------------------------------- */
+
+.avatar {
+    width: 80px;
+    height: 80px;
+
+    border-radius: 50%;
+
+    border: 4px solid #0f172a;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    transition: transform 0.2s ease;
+}
+
+.avatar:hover {
+    transform: scale(1.05);
+}
+
+.avatar-icon {
+    width: 48px;
+    height: 48px;
+
+    margin-top: 8px;
+}
+
+.julia-avatar {
+    background: #e0f2fe;
+    color: #0369a1;
+}
+
+.maria-avatar {
+    background: #ffedd5;
+    color: #c2410c;
+}
+
+.julia-name {
+    color: #0369a1;
+}
+
+.maria-name {
+    color: #c2410c;
+}
+
+
+/* --------------------------------
+   Speech bubbles
+-------------------------------- */
+
+.speech-bubble {
+    position: relative;
+
+    padding: 16px;
+
+    border: 4px solid #0f172a;
+
+    border-radius: 16px;
+
+    font-size: 20px;
+
+    font-weight: 700;
+
+    color: #1e293b;
+}
+
+.bubble-julia {
+    background: #e0f2fe;
+}
+
+.bubble-maria {
+    background: #ffedd5;
+}
+
+
+/* Julia bubble pointer */
+
+.bubble-julia::before {
+    content: "";
+
+    position: absolute;
+
+    left: -18px;
+    top: 24px;
+
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+
+    border-right: 18px solid #0f172a;
+}
+
+.bubble-julia::after {
+    content: "";
+
+    position: absolute;
+
+    left: -12px;
+    top: 26px;
+
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+
+    border-right: 15px solid #e0f2fe;
+}
+
+
+/* Maria bubble pointer */
+
+.bubble-maria::before {
+    content: "";
+
+    position: absolute;
+
+    right: -18px;
+    top: 24px;
+
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+
+    border-left: 18px solid #0f172a;
+}
+
+.bubble-maria::after {
+    content: "";
+
+    position: absolute;
+
+    right: -12px;
+    top: 26px;
+
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+
+    border-left: 15px solid #ffedd5;
+}
+
+
+/* --------------------------------
+   Footer
+-------------------------------- */
+
+.comic-footer {
+    display: inline-block;
+
+    background: #0f172a;
+
+    color: white;
+
+    padding: 8px 24px;
+
+    border-radius: 50px;
+
+    font-size: 20px;
+
+    box-shadow:
+        4px 4px 0 #334155;
+}
+
+
+/* --------------------------------
+   Mobile
+-------------------------------- */
+
+@media (max-width: 767px) {
+
+    .comic-title h1 {
+        font-size: 2.5rem;
+    }
+
+    .speech-bubble {
+        font-size: 18px;
+    }
+
+    .bubble-julia::before,
+    .bubble-julia::after,
+    .bubble-maria::before,
+    .bubble-maria::after {
+        display: none;
+    }
+
+    .maria-row {
+        flex-direction: row-reverse;
+    }
+
+}

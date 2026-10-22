@@ -1,0 +1,147 @@
+---
+import "bootstrap/dist/css/bootstrap.min.css";
+import "../css/comic.css";
+
+const panels = [
+  {
+    number: 1,
+    julia: "Test",
+    maria: "Lorem Ipsum!",
+  },
+  {
+    number: 2,
+    julia: "Lorem Ipsum.",
+    maria: "Lorem Ipsum",
+  },
+  {
+    number: 3,
+    julia: "Lorem Ipsum",
+    maria: "Lorem Ipsum",
+  },
+  {
+    number: 4,
+    julia: "Lorem Ipsum",
+    maria: "Lorem Ipsum",
+  },
+];
+---
+
+<div class="comic-page py-5 px-3">
+
+  <!-- Header -->
+  <header class="container comic-container text-center mb-5">
+
+    <div class="comic-title d-inline-block mb-3">
+      <h1 class="comic-font display-4 mb-0">
+        SPanish
+      </h1>
+    </div>
+
+    <p class="fw-bold text-secondary fs-5 text-uppercase">
+      Basica Dialogue
+    </p>
+
+  </header>
+
+
+  <!-- Comic Panels -->
+  <main class="container comic-container">
+
+    {panels.map((panel) => (
+      <section class="comic-panel bg-white rounded-4 p-3 p-md-4 mb-4 position-relative">
+
+        <!-- Panel badge -->
+        <span class="panel-badge comic-font">
+          PANEL {panel.number}
+        </span>
+
+
+        <div class="row align-items-center g-3">
+
+          <!-- Julia -->
+          <div class="col-12 col-md-6">
+
+            <div class="character-row">
+
+              <div class="character text-center flex-shrink-0">
+
+                <div class="avatar julia-avatar">
+                  <svg
+                    class="avatar-icon"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M12 2C6.48 2 2 6.48 2 12c0 2.85 1.19 5.42 3.1 7.24C5.21 17.28 8.33 16 12 16s6.79 1.28 6.9 3.24C20.81 17.42 22 14.85 22 12c0-5.52-4.48-10-10-10zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3z"/>
+                  </svg>
+                </div>
+
+                <span class="character-name julia-name comic-font">
+                  JULIA
+                </span>
+
+              </div>
+
+
+              <div class="speech-bubble bubble-julia flex-grow-1">
+                <p class="mb-0">
+                  {panel.julia}
+                </p>
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- Maria -->
+          <div class="col-12 col-md-6">
+
+            <div class="character-row maria-row">
+
+              <div class="speech-bubble bubble-maria flex-grow-1">
+                <p class="mb-0">
+                  {panel.maria}
+                </p>
+              </div>
+
+
+              <div class="character text-center flex-shrink-0">
+
+                <div class="avatar maria-avatar">
+                  <svg
+                    class="avatar-icon"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M12 2C6.48 2 2 6.48 2 12c0 2.85 1.19 5.42 3.1 7.24C5.21 17.28 8.33 16 12 16s6.79 1.28 6.9 3.24C20.81 17.42 22 14.85 22 12c0-5.52-4.48-10-10-10zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3z"/>
+                  </svg>
+                </div>
+
+                <span class="character-name maria-name comic-font">
+                  MARIA
+                </span>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+    ))}
+
+  </main>
+
+
+  <!-- Footer -->
+  <footer class="container comic-container text-center mt-5">
+
+    <div class="comic-footer comic-font">
+     FIN
+    </div>
+
+  </footer>
+
+</div>
