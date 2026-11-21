@@ -1,0 +1,115 @@
+---
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./comic.css";
+import Layout from "../../layouts/Layout.astro";
+import { Image } from "astro:assets";
+import juliaAvatar from "./img/julia.png";
+import mariaAvatar from "./img/maria.png";
+
+const panels = [
+  { number: 1, julia: "Hola.", maria: "¡Hola, buenos días!" },
+  {
+    number: 2,
+    julia: "Buenos días. Mi nombre es Julia.",
+    maria: "Mucho gusto. Yo soy María.",
+  },
+  { number: 3, julia: "¿De dónde eres?", maria: "Soy de México. ¿Y tú?" },
+  { number: 4, julia: "Soy de Colombia.", maria: "¡Genial!" },
+];
+---
+
+<Layout
+  title="Saludos y presentaciones | Simple Language Centre"
+  description="Practica saludos y presentaciones en español con Julia y María."
+>
+  <main class="comic-page py-5 px-3">
+    <header class="container comic-container text-center mb-5">
+      <div class="comic-title d-inline-block mb-3">
+        <h1 class="comic-font display-4 mb-0">¡Hola! ¿Cómo te llamas?</h1>
+      </div>
+      <p class="fw-bold text-secondary fs-5 text-uppercase mb-2">
+        Greetings and introductions
+      </p>
+      <p class="text-secondary mx-auto comic-intro">
+        Meet Julia and María as they greet each other and learn where they are from.
+      </p>
+    </header>
+
+    <div class="container comic-container">
+      {panels.map((panel) => (
+        <section
+          class="comic-panel greeting-panel bg-white rounded-4 p-3 p-md-4 mb-4 position-relative"
+          aria-label={`Panel ${panel.number}`}
+        >
+          <span class="panel-badge comic-font">PANEL {panel.number}</span>
+          <div class="row align-items-center g-3 greeting-people">
+            <div class="col-12 col-md-6">
+              <div class="character-row">
+                <div class="character text-center flex-shrink-0">
+                  <div class="avatar julia-avatar">
+                    <Image src={juliaAvatar} alt="Julia" class="avatar-photo" width={80} height={80} />
+                  </div>
+                  <span class="character-name julia-name comic-font">JULIA</span>
+                </div>
+                <div class="speech-bubble bubble-julia flex-grow-1">
+                  <p class="mb-0">{panel.julia}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-md-6">
+              <div class="character-row maria-row">
+                <div class="speech-bubble bubble-maria flex-grow-1">
+                  <p class="mb-0">{panel.maria}</p>
+                </div>
+                <div class="character text-center flex-shrink-0">
+                  <div class="avatar maria-avatar">
+                    <Image src={mariaAvatar} alt="María" class="avatar-photo" width={80} height={80} />
+                  </div>
+                  <span class="character-name maria-name comic-font">MARÍA</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      ))}
+    </div>
+
+    <footer class="container comic-container text-center mt-5">
+      <a class="comic-back-link" href="/comics">← All comics</a>
+    </footer>
+  </main>
+</Layout>
+
+<style>
+  .comic-intro {
+    max-width: 38rem;
+    font-size: 1.1rem;
+  }
+
+  .greeting-panel {
+    overflow: hidden;
+    background-image: linear-gradient(110deg, #fffdf7 0 49.8%, #f3fbfa 50% 100%);
+  }
+
+  .greeting-people {
+    min-height: 150px;
+  }
+
+  .comic-back-link {
+    color: #083045;
+    font-weight: 700;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.2em;
+  }
+
+  @media (max-width: 767px) {
+    .comic-title h1 {
+      font-size: 2rem;
+    }
+
+    .greeting-panel {
+      background-image: linear-gradient(180deg, #fffdf7 0 49.8%, #f3fbfa 50% 100%);
+    }
+  }
+</style>

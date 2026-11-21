@@ -1,6 +1,10 @@
 ---
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./comic.css";
+import Layout from "../../layouts/Layout.astro";
+import { Image } from "astro:assets";
+import juliaAvatar from "./img/julia.png";
+import mariaAvatar from "./img/maria.png";
 
 const panels = [
   {
@@ -26,6 +30,10 @@ const panels = [
 ];
 ---
 
+<Layout
+  title="Spanish Comic Strip | Simple Language Centre"
+  description="Read a short Spanish dialogue comic from Simple Language Centre and practise understanding Spanish in context."
+>
 <div class="comic-page py-5 px-3">
 
   <!-- Header -->
@@ -66,13 +74,7 @@ const panels = [
               <div class="character text-center flex-shrink-0">
 
                 <div class="avatar julia-avatar">
-                  <svg
-                    class="avatar-icon"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M12 2C6.48 2 2 6.48 2 12c0 2.85 1.19 5.42 3.1 7.24C5.21 17.28 8.33 16 12 16s6.79 1.28 6.9 3.24C20.81 17.42 22 14.85 22 12c0-5.52-4.48-10-10-10zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3z"/>
-                  </svg>
+                  <Image src={juliaAvatar} alt="Julia" class="avatar-photo" width={80} height={80} />
                 </div>
 
                 <span class="character-name julia-name comic-font">
@@ -108,13 +110,7 @@ const panels = [
               <div class="character text-center flex-shrink-0">
 
                 <div class="avatar maria-avatar">
-                  <svg
-                    class="avatar-icon"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M12 2C6.48 2 2 6.48 2 12c0 2.85 1.19 5.42 3.1 7.24C5.21 17.28 8.33 16 12 16s6.79 1.28 6.9 3.24C20.81 17.42 22 14.85 22 12c0-5.52-4.48-10-10-10zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3z"/>
-                  </svg>
+                  <Image src={mariaAvatar} alt="Maria" class="avatar-photo" width={80} height={80} />
                 </div>
 
                 <span class="character-name maria-name comic-font">
@@ -145,3 +141,4 @@ const panels = [
   </footer>
 
 </div>
+</Layout>

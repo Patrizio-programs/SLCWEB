@@ -1,0 +1,75 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Nav from "../../components/Nav.astro";
+import Footer from "../../components/Footer.astro";
+
+const comics = [
+  {
+    title: "Saludos y presentaciones",
+    description:
+      "Meet Julia and María and practise greetings, names, and asking where someone is from.",
+    href: "/comics/greetings-introductions",
+    topic: "Greetings",
+  },
+  {
+    title: "¿Qué hiciste este fin de semana?",
+    description:
+      "Read a five-panel conversation and practise Spanish preterite verbs for everyday weekend activities.",
+    href: "/comics/preterite-weekend",
+    topic: "Pretérito",
+  },
+];
+---
+
+<Layout
+  title="Spanish Comics | Simple Language Centre"
+  description="Read Spanish comics from Simple Language Centre and practise vocabulary and grammar in short conversations."
+>
+  <Nav />
+
+  <main class="container py-5">
+    <header class="text-center mb-5">
+      <p class="text-uppercase fw-bold text-secondary mb-2">Read and practise</p>
+      <h1 class="display-5 fw-bold">Spanish Comics</h1>
+      <p class="lead text-muted mx-auto" style="max-width: 42rem;">
+        Short conversations make it easier to see Spanish grammar in context.
+        Choose a comic to get started.
+      </p>
+    </header>
+
+    <div class="row g-4 justify-content-center">
+      {comics.map((comic) => (
+        <div class="col-12 col-md-8 col-lg-6">
+          <article class="card h-100 shadow-sm border-0 comic-card">
+            <div class="card-body d-flex flex-column p-4 p-md-5">
+              <span class="badge rounded-pill text-bg-warning align-self-start mb-3">
+                {comic.topic}
+              </span>
+              <h2 class="h3 card-title fw-bold">{comic.title}</h2>
+              <p class="card-text text-secondary flex-grow-1">
+                {comic.description}
+              </p>
+              <a class="btn btn-primary align-self-start" href={comic.href}>
+                Read comic <span aria-hidden="true">→</span>
+              </a>
+            </div>
+          </article>
+        </div>
+      ))}
+    </div>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .comic-card {
+    border-radius: 1rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .comic-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0.75rem 1.5rem rgb(8 48 69 / 12%) !important;
+  }
+</style>

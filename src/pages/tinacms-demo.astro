@@ -21,6 +21,14 @@ if (!data) return new Response('Not Found', { status: 404 });
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{data.title}</title>
+    <meta name="description" content="A demonstration page for editing Simple Language Centre content with TinaCMS." />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta property="og:title" content={`${data.title} | TinaCMS Demo`} />
+    <meta property="og:description" content="A demonstration page for editing Simple Language Centre content with TinaCMS." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={`${data.title} | TinaCMS Demo`} />
+    <meta name="twitter:description" content="A demonstration page for editing Simple Language Centre content with TinaCMS." />
     <style is:global>
       :root {
         color-scheme: dark;

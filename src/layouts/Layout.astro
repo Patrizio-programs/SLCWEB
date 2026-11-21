@@ -1,15 +1,36 @@
 ---
 import AlertBar from "../components/AlertBar.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+  noindex?: boolean;
+}
+
+const {
+  title = "Simple Language Centre | Learn Spanish with Confidence",
+  description = "Learn Spanish with Simple Language Centre through engaging courses, CXC exam preparation, and free practice resources.",
+  noindex = false,
+} = Astro.props;
 ---
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="logo.svg" />
+    <link rel="icon" type="image/svg+xml" href="/logo.svg" />
     <link rel="icon" href="/logo.ico" />
     <meta name="generator" content={Astro.generator} />
-    <title>SIMPLE LANGUAGE CENTRE</title>
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <meta property="og:site_name" content="Simple Language Centre" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"

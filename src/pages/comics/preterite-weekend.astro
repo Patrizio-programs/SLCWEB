@@ -1,0 +1,168 @@
+---
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./comic.css";
+import Layout from "../../layouts/Layout.astro";
+import { Image } from "astro:assets";
+import juliaAvatar from "./img/julia.png";
+import mariaAvatar from "./img/maria.png";
+
+const panels = [
+  {
+    number: 1,
+    julia: "¿Qué hiciste este fin de semana?",
+    mariaBefore: "",
+    verb: "Limpié",
+    mariaAfter: " la casa.",
+  },
+  {
+    number: 2,
+    julia: "¡Qué bien!",
+    mariaBefore: "",
+    verb: "Fui",
+    mariaAfter: " al supermercado.",
+  },
+  {
+    number: 3,
+    julia: "¡Excelente!",
+    mariaBefore: "",
+    verb: "Visité",
+    mariaAfter: " a mi tía.",
+  },
+  {
+    number: 4,
+    julia: "¡Qué bueno!",
+    mariaBefore: "",
+    verb: "Cociné",
+    mariaAfter: " con mi familia.",
+  },
+  {
+    number: 5,
+    julia: "¡Qué buen fin de semana!",
+    mariaBefore: "También ",
+    verb: "descansé",
+    mariaAfter: " el domingo.",
+  },
+];
+---
+
+<Layout
+  title="Preterite conversation | Simple Language Centre"
+  description="Practise Spanish preterite verbs in a five-panel conversation about weekend activities."
+>
+<div class="comic-page py-5 px-3">
+
+  <!-- Header -->
+  <header class="container comic-container text-center mb-5">
+
+    <div class="comic-title d-inline-block mb-3">
+      <h1 class="comic-font display-4 mb-0">
+        ¿Qué hiciste? - What did you do?
+      </h1>
+    </div>
+
+    <p class="fw-bold text-secondary fs-5 text-uppercase">
+      Practice the Preterite
+    </p>
+
+  </header>
+
+
+  <!-- Comic Panels -->
+  <main class="container comic-container">
+
+    {panels.map((panel) => (
+      <section class="comic-panel bg-white rounded-4 p-3 p-md-4 mb-4 position-relative">
+
+        <!-- Panel badge -->
+        <span class="panel-badge comic-font">
+          PANEL {panel.number}
+        </span>
+
+
+        <div class="row align-items-center g-3">
+
+          <!-- Julia -->
+          <div class="col-12 col-md-6">
+
+            <div class="character-row">
+
+              <div class="character text-center flex-shrink-0">
+
+                <div class="avatar julia-avatar">
+                  <Image src={juliaAvatar} alt="Julia" class="avatar-photo" width={80} height={80} />
+                </div>
+
+                <span class="character-name julia-name comic-font">
+                  JULIA
+                </span>
+
+              </div>
+
+
+              <div class="speech-bubble bubble-julia flex-grow-1">
+                <p class="mb-0">
+                  {panel.julia}
+                </p>
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- Maria -->
+          <div class="col-12 col-md-6">
+
+            <div class="character-row maria-row">
+
+              <div class="speech-bubble bubble-maria flex-grow-1">
+                <p class="mb-0">
+                  {panel.mariaBefore}<strong class="preterite-verb">{panel.verb}</strong>{panel.mariaAfter}
+                </p>
+              </div>
+
+
+              <div class="character text-center flex-shrink-0">
+
+                <div class="avatar maria-avatar">
+                  <Image src={mariaAvatar} alt="Maria" class="avatar-photo" width={80} height={80} />
+                </div>
+
+                <span class="character-name maria-name comic-font">
+                  MARIA
+                </span>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+    ))}
+
+  </main>
+
+
+  <!-- Footer -->
+  <footer class="container comic-container text-center mt-5">
+
+    <div class="comic-footer comic-font">
+     FIN
+    </div>
+
+  </footer>
+
+</div>
+</Layout>
+
+<style>
+  .preterite-verb {
+    color: #9a3412;
+    text-decoration: underline;
+    text-decoration-thickness: 3px;
+    text-underline-offset: 0.15em;
+  }
+</style>
